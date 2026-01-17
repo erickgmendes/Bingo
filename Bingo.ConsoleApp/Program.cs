@@ -9,7 +9,7 @@ namespace Bingo.ConsoleApp
 
         #region Method Main
 
-        static void Main(string[] args)
+        static void Main()
         {
             while ("S".Equals(Continuar()))
             {
@@ -52,11 +52,14 @@ namespace Bingo.ConsoleApp
             return quantidade;
         }
 
-        private static IList<int> MontarPedras()
+        private static IList<int> MontarPedras
         {
-            var pedras = new List<int>(90);
-            pedras.AddRange(Enumerable.Range(1, 90));
-            return pedras;
+            get
+            {
+                var pedras = new List<int>(90);
+                pedras.AddRange(Enumerable.Range(1, 90));
+                return pedras;
+            }
         }
 
         private static List<Cartela> MontarCartelas(int numCartelas)
@@ -89,7 +92,7 @@ namespace Bingo.ConsoleApp
 
         private static void Jogar(IList<Cartela> cartelas)
         {
-            var pedras = MontarPedras();
+            var pedras = MontarPedras;
             var random = new Random();
             var bingo = false;
             var pedrasCantadas = new List<int>(90);
@@ -98,8 +101,9 @@ namespace Bingo.ConsoleApp
             while (!bingo)
             {
 #if !DEBUG
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(800);
 #endif
+                System.Threading.Thread.Sleep(200);
                 var indice = random.Next(1, pedras.Count) - 1;
                 var numero = pedras[indice];
                 pedras.RemoveAt(indice);
@@ -179,11 +183,11 @@ namespace Bingo.ConsoleApp
             Console.WriteLine(string.Empty);
         }
 
-        private static void MostrarNumerosSorteados(IList<int> pedrasCantadas)
+        private static void MostrarNumerosSorteados(List<int> pedrasCantadas)
         {
             Console.Write("Números Sorteados: \n");
 
-            var pedras = MontarPedras();
+            var pedras = MontarPedras;
 
             for (int i = 1; i <= pedras.Count; i++)
             {
